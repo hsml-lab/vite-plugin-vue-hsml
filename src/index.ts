@@ -1,5 +1,5 @@
+import { compile_content } from 'hsml';
 import type { Plugin } from 'vite';
-import { compile_content } from './hsml';
 
 const fileRegex = /\.vue$/;
 
