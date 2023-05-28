@@ -1,0 +1,66 @@
+{
+  "name": "vite-plugin-vue-hsml",
+  "version": "0.1.0",
+  "description": "Vite plugin for using hsml in Vue SFC",
+  "keywords": [],
+  "author": {
+    "name": "Christopher Quadflieg",
+    "email": "chrissi92@hotmail.de",
+    "url": "https://github.com/Shinigami92"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shinigami92/vite-plugin-vue-hsml.git"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/Shinigami92"
+    },
+    {
+      "type": "paypal",
+      "url": "https://www.paypal.com/donate/?hosted_button_id=L7GY729FBKTZY"
+    }
+  ],
+  "bugs": "https://github.com/Shinigami92/vite-plugin-vue-hsml/issues",
+  "license": "MIT",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf coverage dist pnpm-lock.yaml node_modules",
+    "build": "tsup-node",
+    "format": "prettier --cache --write .",
+    "lint": "echo 'No linting configured.'",
+    "test": "vitest",
+    "test:update-snapshots": "vitest run -u",
+    "coverage": "vitest run --coverage",
+    "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build",
+    "preflight": "pnpm install && run-s format lint build test:update-snapshots"
+  },
+  "devDependencies": {
+    "@types/node": "~20.2.5",
+    "@types/prettier": "~2.7.2",
+    "@vitest/coverage-c8": "~0.31.1",
+    "c8": "~7.13.0",
+    "npm-run-all": "~4.1.5",
+    "prettier": "2.8.8",
+    "prettier-plugin-organize-imports": "~3.2.2",
+    "rimraf": "~5.0.1",
+    "tsup": "~6.7.0",
+    "tsx": "~3.12.7",
+    "typescript": "~5.0.4",
+    "vitest": "~0.31.1"
+  },
+  "peerDependencies": {
+    "vite": "^4.0.0"
+  },
+  "packageManager": "pnpm@8.5.1",
+  "engines": {
+    "node": "^16.13.0 || >=18.0.0",
+    "npm": ">=7.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
