@@ -1,10 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", "schedule:nonOfficeHours", "group:allNonMajor"],
+  "extends": [
+    "config:best-practices",
+    "schedule:earlyMondays",
+    "group:allNonMajor",
+    ":prHourlyLimitNone"
+  ],
   "timezone": "Europe/Berlin",
-  "labels": ["dependencies"],
-  "reviewersFromCodeOwners": true,
-  "rangeStrategy": "bump",
+  "labels": ["c: dependencies"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "groupName": "devDependencies",
@@ -27,24 +33,32 @@
       "rangeStrategy": "replace"
     },
     {
-      "groupName": "typescript-eslint",
-      "matchPackagePrefixes": ["@typescript-eslint/"]
+      "groupName": "eslint",
+      "matchPackageNames": [
+        "@eslint/**",
+        "@stylistic/**",
+        "eslint",
+        "eslint-**",
+        "typescript-eslint"
+      ]
     },
     {
       "groupName": "vitest",
-      "matchPackageNames": ["@vitest/coverage-c8", "@vitest/ui", "vitest"]
+      "matchPackageNames": ["@vitest/**", "vitest"]
     },
     {
       "groupName": "prettier",
-      "matchPackageNames": ["@types/prettier", "prettier"]
+      "matchPackageNames": ["prettier"]
     },
     {
       "groupName": "typescript",
       "matchPackageNames": ["typescript"]
     }
   ],
+  "reviewersFromCodeOwners": true,
+  "rangeStrategy": "bump",
   "vulnerabilityAlerts": {
-    "labels": ["security"],
-    "assigneesFromCodeOwners": true
+    "labels": ["c: security"],
+    "assignees": ["@Shinigami92"]
   }
 }
