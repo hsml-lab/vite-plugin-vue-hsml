@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Shinigami92/vite-plugin-vue-hsml.git"
+    "url": "https://github.com/hsml-lab/vite-plugin-vue-hsml.git"
   },
   "funding": [
     {
@@ -22,7 +22,7 @@
       "url": "https://www.paypal.com/donate/?hosted_button_id=L7GY729FBKTZY"
     }
   ],
-  "bugs": "https://github.com/Shinigami92/vite-plugin-vue-hsml/issues",
+  "bugs": "https://github.com/hsml-lab/vite-plugin-vue-hsml/issues",
   "license": "MIT",
   "type": "module",
   "exports": "./dist/index.js",

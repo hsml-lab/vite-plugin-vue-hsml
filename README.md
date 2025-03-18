@@ -5,11 +5,11 @@
   <a href="https://www.npmjs.com/package/vite-plugin-vue-hsml" target="_blank">
     <img alt="Downloads" src="https://img.shields.io/npm/dt/vite-plugin-vue-hsml.svg">
   </a>
-  <a href="https://github.com/Shinigami92/vite-plugin-vue-hsml/actions/workflows/ci.yml">
-    <img alt="Build Status" src="https://github.com/Shinigami92/vite-plugin-vue-hsml/actions/workflows/ci.yml/badge.svg?branch=main">
+  <a href="https://github.com/hsml-lab/vite-plugin-vue-hsml/actions/workflows/ci.yml">
+    <img alt="Build Status" src="https://github.com/hsml-lab/vite-plugin-vue-hsml/actions/workflows/ci.yml/badge.svg?branch=main">
   </a>
-  <a href="https://github.com/Shinigami92/vite-plugin-vue-hsml/blob/main/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/Shinigami92/vite-plugin-vue-hsml.svg">
+  <a href="https://github.com/hsml-lab/vite-plugin-vue-hsml/blob/main/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/hsml-lab/vite-plugin-vue-hsml.svg">
   </a>
   <a href="https://www.paypal.com/donate?hosted_button_id=L7GY729FBKTZY" target="_blank">
     <img alt="Donate: PayPal" src="https://img.shields.io/badge/Donate-PayPal-blue.svg">
@@ -24,7 +24,7 @@ Right now there is no stable version of `hsml` available. I'm just working on it
 
 # vite-plugin-vue-hsml
 
-[hsml](https://github.com/Shinigami92/hsml) is a hyper short markup language that is inspired by [pug](https://pugjs.org) (aka jade).
+[hsml](https://github.com/hsml-lab/hsml) is a hyper short markup language that is inspired by [pug](https://pugjs.org) (aka jade).
 
 This plugin allows you to use `hsml` in Vue SFCs.
 
