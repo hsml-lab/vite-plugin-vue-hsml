@@ -36,16 +36,16 @@ describe('integration', () => {
 
     // Verify the HSML template was compiled to HTML before Vue processes it
     expect(capture.result).toContain(
-      '<template>'
-        + '<div id="app">'
-        + '<h1 class="text-xl font-bold">Hello HSML</h1>'
-        + '<p>The count is {{ count }}</p>'
-        + '<button @click="count++">Increment</button>'
-        + '<ul>'
-        + '<li v-for="i in 3" :key="i">Item {{ i }}</li>'
-        + '</ul>'
-        + '</div>'
-        + '</template>',
+      '<template>' +
+        '<div id="app">' +
+        '<h1 class="text-xl font-bold">Hello HSML</h1>' +
+        '<p>The count is {{ count }}</p>' +
+        '<button @click="count++">Increment</button>' +
+        '<ul>' +
+        '<li v-for="i in 3" :key="i">Item {{ i }}</li>' +
+        '</ul>' +
+        '</div>' +
+        '</template>',
     );
 
     // Verify the build succeeded and produced output

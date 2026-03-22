@@ -49,6 +49,14 @@ describe('vite-plugin-vue-hsml', () => {
       );
       expect(result?.code).toBe('<template><h1>Hello</h1></template>');
     });
+
+    it('should handle CRLF line endings', () => {
+      const result = transform(
+        '<template lang="hsml">\r\nh1 Hello\r\np World\r\n</template>',
+        'test.vue',
+      );
+      expect(result?.code).toBe('<template><h1>Hello</h1><p>World</p></template>');
+    });
   });
 
   describe('tags', () => {
