@@ -1,4 +1,4 @@
-import { compile_content } from 'hsml';
+import { compileContent } from 'hsml';
 import type { Plugin } from 'vite';
 
 const fileRegex = /\.vue$/;
@@ -17,7 +17,7 @@ export function transform(code: string, id: string) {
 
       const hsml = template[1]!.trimStart();
 
-      const content = compile_content(hsml);
+      const content = compileContent(hsml);
 
       code = code.replace(regex, `<template>${content}</template>`);
     }
