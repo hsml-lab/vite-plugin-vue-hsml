@@ -15,7 +15,7 @@ export function transform(code: string, id: string) {
     return;
   }
 
-  const hsml = match[1]!.trimStart();
+  const hsml = match[1]!.replaceAll('\r\n', '\n').trimStart();
   const result = compileContentWithDiagnostics(hsml);
 
   for (const diagnostic of result.diagnostics) {
