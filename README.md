@@ -128,6 +128,8 @@ div(ref="container" :class="containerClass")
 
 ### Equivalent HTML
 
+> **Note:** This example uses [UnoCSS Attributify Mode](https://unocss.dev/presets/attributify), where utility classes appear as individual attributes. The basic example above shows standard `class` attribute output.
+
 ```vue
 <!-- script block would be same -->
 
