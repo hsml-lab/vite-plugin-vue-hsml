@@ -41,6 +41,14 @@ describe('vite-plugin-vue-hsml', () => {
       const result = transform("<template lang='hsml'>\nh1 Hello\n</template>", 'test.vue');
       expect(result?.code).toBe('<template><h1>Hello</h1></template>');
     });
+
+    it('should match when lang is not the only attribute', () => {
+      const result = transform(
+        '<template data-test="x" lang="hsml">\nh1 Hello\n</template>',
+        'test.vue',
+      );
+      expect(result?.code).toBe('<template><h1>Hello</h1></template>');
+    });
   });
 
   describe('tags', () => {
@@ -329,7 +337,9 @@ const msg = 'Hello';
   describe('error handling', () => {
     it('should throw on invalid HSML', () => {
       const input = '<template lang="hsml">\n42invalid\n</template>';
-      expect(() => transform(input, 'test.vue')).toThrow('Failed to compile HSML template');
+      expect(() => transform(input, 'test.vue')).toThrow(
+        /Failed to compile HSML template in test\.vue:/,
+      );
     });
   });
 

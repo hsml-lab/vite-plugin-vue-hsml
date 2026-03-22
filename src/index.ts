@@ -2,7 +2,7 @@ import { compileContentWithDiagnostics } from 'hsml';
 import type { Plugin } from 'vite';
 
 const fileRegex = /\.vue$/;
-const templateRegex = /<template\s+lang=(?:"hsml"|'hsml')>([\s\S]*?)<\/template>/m;
+const templateRegex = /<template\b(?=[^>]*\blang\s*=\s*["']hsml["'])[^>]*>([\s\S]*?)<\/template>/m;
 
 /** @internal */
 export function transform(code: string, id: string) {
