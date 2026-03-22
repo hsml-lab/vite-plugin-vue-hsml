@@ -208,7 +208,7 @@ bun add -D vite-plugin-vue-hsml
 
 ## Setup
 
-Add the plugin to your `vite.config.ts` **before** `@vitejs/plugin-vue`:
+Add the plugin to your `vite.config.ts`:
 
 ```ts
 import { defineConfig } from 'vite';

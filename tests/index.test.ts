@@ -1,7 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { transform } from '../src';
+import VueHsml, { transform } from '../src';
 
 describe('vite-plugin-vue-hsml', () => {
+  describe('plugin', () => {
+    it('should enforce pre to run before @vitejs/plugin-vue', () => {
+      const plugin = VueHsml();
+      expect(plugin.enforce).toBe('pre');
+    });
+  });
+
   describe('file filtering', () => {
     it('should ignore non-vue files', () => {
       expect(transform('<template lang="hsml">\nh1 Hello\n</template>', 'test.ts')).toBeUndefined();
@@ -15,12 +22,12 @@ describe('vite-plugin-vue-hsml', () => {
 
     it('should pass through vue files without hsml template', () => {
       const code = '<template><div>Hello</div></template>';
-      expect(transform(code, 'test.vue')).toEqual({ code, map: null });
+      expect(transform(code, 'test.vue')).toBeUndefined();
     });
 
     it('should pass through vue files with other template langs', () => {
       const code = '<template lang="pug">\nh1 Hello\n</template>';
-      expect(transform(code, 'test.vue')).toEqual({ code, map: null });
+      expect(transform(code, 'test.vue')).toBeUndefined();
     });
   });
 
@@ -315,8 +322,7 @@ const msg = 'Hello';
 <template>
 <div>{{ msg }}</div>
 </template>`;
-      const result = transform(input, 'test.vue');
-      expect(result?.code).toBe(input);
+      expect(transform(input, 'test.vue')).toBeUndefined();
     });
   });
 

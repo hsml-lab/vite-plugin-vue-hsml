@@ -12,10 +12,7 @@ export function transform(code: string, id: string) {
 
   const match = templateRegex.exec(code);
   if (!match) {
-    return {
-      code,
-      map: null,
-    };
+    return;
   }
 
   const hsml = match[1]!.trimStart();
@@ -44,9 +41,11 @@ export function transform(code: string, id: string) {
   };
 }
 
+/** Vite plugin that compiles `<template lang="hsml">` blocks in Vue SFCs to HTML. */
 export default function VueHsml(): Plugin {
   return {
     name: 'vite-plugin-vue-hsml',
+    enforce: 'pre',
     transform(code, id) {
       return transform(code, id);
     },
