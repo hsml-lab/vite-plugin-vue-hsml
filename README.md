@@ -1,48 +1,74 @@
-<p>
-  <a href="https://www.npmjs.com/package/vite-plugin-vue-hsml" target="_blank">
-    <img alt="NPM package" src="https://img.shields.io/npm/v/vite-plugin-vue-hsml.svg">
-  </a>
-  <a href="https://www.npmjs.com/package/vite-plugin-vue-hsml" target="_blank">
-    <img alt="Downloads" src="https://img.shields.io/npm/dt/vite-plugin-vue-hsml.svg">
-  </a>
-  <a href="https://github.com/hsml-lab/vite-plugin-vue-hsml/actions/workflows/ci.yml">
-    <img alt="Build Status" src="https://github.com/hsml-lab/vite-plugin-vue-hsml/actions/workflows/ci.yml/badge.svg?branch=main">
-  </a>
-  <a href="https://github.com/hsml-lab/vite-plugin-vue-hsml/blob/main/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/hsml-lab/vite-plugin-vue-hsml.svg">
-  </a>
-  <a href="https://www.paypal.com/donate?hosted_button_id=L7GY729FBKTZY" target="_blank">
-    <img alt="Donate: PayPal" src="https://img.shields.io/badge/Donate-PayPal-blue.svg">
-  </a>
-</p>
-
-# UNDER CONSTRUCTION
-
-Right now there is no stable version of `hsml` available. I'm just working on it.
-
-<img src="https://chronicle-brightspot.s3.amazonaws.com/6a/c4/00e4ab3143f7e0cf4d9fd33aa00b/constructocat2.jpg" width="400px" />
+[![NPM](https://img.shields.io/npm/v/vite-plugin-vue-hsml.svg)](https://www.npmjs.com/package/vite-plugin-vue-hsml)
+[![Downloads](https://img.shields.io/npm/dt/vite-plugin-vue-hsml.svg)](https://www.npmjs.com/package/vite-plugin-vue-hsml)
+[![CI](https://github.com/hsml-lab/vite-plugin-vue-hsml/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/hsml-lab/vite-plugin-vue-hsml/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/hsml-lab/vite-plugin-vue-hsml/branch/main/graph/badge.svg)](https://codecov.io/gh/hsml-lab/vite-plugin-vue-hsml)
+[![License: MIT](https://img.shields.io/github/license/hsml-lab/vite-plugin-vue-hsml.svg)](https://github.com/hsml-lab/vite-plugin-vue-hsml/blob/main/LICENSE)
+[![Donate: PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/donate?hosted_button_id=L7GY729FBKTZY)
 
 # vite-plugin-vue-hsml
 
-[hsml](https://github.com/hsml-lab/hsml) is a hyper short markup language that is inspired by [pug](https://pugjs.org) (aka jade).
+Use [HSML](https://github.com/hsml-lab/hsml) in your Vue Single File Components. Write less markup, ship faster.
 
-This plugin allows you to use `hsml` in Vue SFCs.
+> Still early — tracking [hsml](https://github.com/hsml-lab/hsml) as it stabilizes.
 
-## Example
+## What it does
+
+This plugin lets you use `<template lang="hsml">` in Vue SFCs. At build time, HSML is compiled to HTML before Vue processes the template — zero runtime cost.
 
 ```vue
 <script setup lang="ts">
-defineProps<{
+import { ref } from 'vue';
+
+const count = ref(0);
+</script>
+
+<template lang="hsml">
+div
+  h1.text-xl.font-bold Hello World
+  button(@click="count++") Count is {{ count }}
+  .card
+    p.text-gray-500 Nice to meet you!
+</template>
+```
+
+Compiles to:
+
+```vue
+<template>
+  <div>
+    <h1 class="text-xl font-bold">Hello World</h1>
+    <button @click="count++">Count is {{ count }}</button>
+    <div class="card">
+      <p class="text-gray-500">Nice to meet you!</p>
+    </div>
+  </div>
+</template>
+```
+
+<details>
+<summary><b>Real-world example</b> — 20% fewer characters, 47% fewer lines in the template</summary>
+
+Based on [elk-zone/elk `MainContent.vue`](https://github.com/elk-zone/elk/blob/main/app/components/main/MainContent.vue).
+
+### HSML
+
+```vue
+<script setup lang="ts">
+const { back = false } = defineProps<{
+  /**
+   * Should we show a back button?
+   * Note: this will be forced to false on xl screens to avoid duplicating the sidebar's back button.
+   */
+  back?: boolean | 'small-only';
   /** Show the back button on small screens */
   backOnSmallScreen?: boolean;
-  /** Show the back button on both small and big screens */
-  back?: boolean;
   /** Do not applying overflow hidden to let use floatable components in title */
   noOverflowHidden?: boolean;
 }>();
 
 const container = ref();
 const route = useRoute();
+const userSettings = useUserSettings();
 const { height: windowHeight } = useWindowSize();
 const { height: containerHeight } = useElementBounding(container);
 const wideLayout = computed(() => route.meta.wideLayout ?? false);
@@ -53,39 +79,182 @@ const containerClass = computed(() => {
 
   return 'lg:sticky lg:top-0';
 });
+
+const showBackButton = computed(() => {
+  switch (back) {
+    case 'small-only':
+      return isSmallOrMediumScreen.value;
+    case true:
+      return !isExtraLargeScreen.value;
+    default:
+      return false;
+  }
+});
 </script>
 
 <template lang="hsml">
 div(ref="container" :class="containerClass")
-  .sticky.top-0.z10.backdrop-blur.native:lg:w-[calc(100vw-5rem)].native:xl:w-[calc(135%+(100vw-1200px)/2)](
+  .sticky.top-0.z-20(
     pt="[env(safe-area-inset-top,0)]"
     bg="[rgba(var(--rgb-bg-base),0.7)]"
+    :class="{
+      'backdrop-blur': !getPreferences(userSettings, 'optimizeForLowPerformanceDevice'),
+    }"
   )
-    .flex.justify-between.px5.py2.native:xl:flex(:class="{ 'xl:hidden': $route.name !== 'tag' }" border="b base")
-      .flex.gap-3.items-center.py2.w-full(:overflow-hidden="!noOverflowHidden ? '' : false")
-        NuxtLink.items-center.btn-text.p-0.xl:hidden(
-          v-if="backOnSmallScreen || back"
-          flex="~ gap1"
+    .min-h-53px.px-2.py-1(flex="~ justify-between" :class="{ 'xl:hidden': $route.name !== 'tag' }" border="b base")
+      .w-full(flex="~ items-center")
+        button.btn-text.flex.items-center.p-3.xl:hidden(
+          v-if="backOnSmallScreen || showBackButton"
           :aria-label="$t('nav.back')"
           @click="$router.go(-1)"
         )
-          .rtl-flip(i-ri:arrow-left-line)
-        .flex.w-full.native-mac:justify-center.native-mac:text-center.native-mac:sm:justify-start(
-          :truncate="!noOverflowHidden ? '' : false"
-          data-tauri-drag-region
-        )
+          .text-lg.rtl-flip(i-ri:arrow-left-line)
+        .flex.w-full
           slot(name="title")
-        .sm:hidde.nh-7.w-1px
-      .flex.items-center.flex-shrink-0.gap-x-2
+        .sm:hidden.h-7.w-1px
+      .px-3(flex="~ items-center shrink-0 gap-x-2")
         slot(name="actions")
-        PwaBadge.lg:hidden
+        PwaBadge.xl:hidden
         NavUser(v-if="isHydrated")
         NavUserSkeleton(v-else)
     slot(name="header")
       div(hidden)
-  PwaInstallPrompt.lg:hidden
+  PwaInstallPrompt.xl:hidden
   .m-auto(:class="isHydrated && wideLayout ? 'xl:w-full sm:max-w-600px' : 'sm:max-w-600px md:shrink-0'")
     .h-6(hidden :class="{ 'xl:block': $route.name !== 'tag' && !$slots.header }")
     slot
 </template>
 ```
+
+### Equivalent HTML
+
+```vue
+<!-- script block would be same -->
+
+<template>
+  <div ref="container" :class="containerClass">
+    <div
+      sticky
+      top-0
+      z-20
+      pt="[env(safe-area-inset-top,0)]"
+      bg="[rgba(var(--rgb-bg-base),0.7)]"
+      :class="{
+        'backdrop-blur': !getPreferences(userSettings, 'optimizeForLowPerformanceDevice'),
+      }"
+    >
+      <div
+        flex="~ justify-between"
+        min-h-53px
+        px-2
+        py-1
+        :class="{ 'xl:hidden': $route.name !== 'tag' }"
+        border="b base"
+      >
+        <div flex="~ items-center" w-full>
+          <button
+            v-if="backOnSmallScreen || showBackButton"
+            btn-text
+            flex
+            items-center
+            p-3
+            xl:hidden
+            :aria-label="$t('nav.back')"
+            @click="$router.go(-1)"
+          >
+            <div text-lg i-ri:arrow-left-line class="rtl-flip" />
+          </button>
+          <div flex w-full>
+            <slot name="title" />
+          </div>
+          <div sm:hidden h-7 w-1px />
+        </div>
+        <div flex="~ items-center shrink-0 gap-x-2" px-3>
+          <slot name="actions" />
+          <PwaBadge xl:hidden />
+          <NavUser v-if="isHydrated" />
+          <NavUserSkeleton v-else />
+        </div>
+      </div>
+      <slot name="header">
+        <div hidden />
+      </slot>
+    </div>
+    <PwaInstallPrompt xl:hidden />
+    <div
+      :class="isHydrated && wideLayout ? 'xl:w-full sm:max-w-600px' : 'sm:max-w-600px md:shrink-0'"
+      m-auto
+    >
+      <div hidden :class="{ 'xl:block': $route.name !== 'tag' && !$slots.header }" h-6 />
+      <slot />
+    </div>
+  </div>
+</template>
+```
+
+</details>
+
+## Installation
+
+```sh
+npm install -D vite-plugin-vue-hsml
+# or
+pnpm add -D vite-plugin-vue-hsml
+# or
+bun add -D vite-plugin-vue-hsml
+```
+
+## Setup
+
+Add the plugin to your `vite.config.ts` **before** `@vitejs/plugin-vue`:
+
+```ts
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueHsml from 'vite-plugin-vue-hsml';
+
+export default defineConfig({
+  plugins: [vueHsml(), vue()],
+});
+```
+
+That's it. Any `<template lang="hsml">` block will be compiled automatically.
+
+## HSML syntax at a glance
+
+```hsml
+// Tags (div is the default when only class/id is used)
+h1 Hello World
+.container
+  .card Hello
+
+// Classes and IDs
+h1#title.text-red.font-bold Hello
+
+// Attributes
+img(src="/photo.jpg" alt="A photo")
+a(href="https://example.com" target="_blank") Link
+
+// Multiline attributes
+button(
+  @click="handleClick"
+  :disabled="loading"
+  class="btn btn-primary"
+) Submit
+
+// Vue directives work as-is
+div(v-if="show")
+  ul
+    li(v-for="item in items" :key="item.id") {{ item.name }}
+```
+
+For the full syntax reference, see the [HSML documentation](https://github.com/hsml-lab/hsml#hsml-syntax).
+
+## Requirements
+
+- Node.js >= 22
+- Vite >= 6.4.1
+
+## License
+
+[MIT](LICENSE)
