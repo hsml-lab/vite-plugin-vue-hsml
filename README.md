@@ -255,7 +255,7 @@ For the full syntax reference, see the [HSML documentation](https://github.com/h
 ## Requirements
 
 - Node.js >= 22
-- Vite >= 6.4.1
+- Vite ^6.4.1 || ^7.1.11 || ^8.0.0
 
 ## License
 
