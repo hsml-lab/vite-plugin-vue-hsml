@@ -2,7 +2,15 @@
   "name": "vite-plugin-vue-hsml",
   "version": "0.1.0",
   "description": "Vite plugin for using hsml in Vue SFC",
-  "keywords": [],
+  "keywords": [
+    "hsml",
+    "markup",
+    "plugin",
+    "sfc",
+    "template",
+    "vite",
+    "vue"
+  ],
   "bugs": "https://github.com/hsml-lab/vite-plugin-vue-hsml/issues",
   "license": "MIT",
   "author": {
