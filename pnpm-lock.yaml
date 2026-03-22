@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       hsml:
-        specifier: ~0.1.0
-        version: 0.1.0
+        specifier: ~0.2.0
+        version: 0.2.0
       vite:
         specifier: ^6.4.1 || ^7.1.11 || ^8.0.0
         version: 8.0.1(@types/node@24.12.0)(esbuild@0.27.4)(tsx@4.21.0)
@@ -841,8 +841,8 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  hsml@0.1.0:
-    resolution: {integrity: sha512-w1SLgv9F9lB7p24dj2erbqDf+/1Mb1scInxOHEz5VUUF4OMiSfoJuiCfRd/mpZJvxbHjdZ8Kq8JWCkkmMmaq3Q==}
+  hsml@0.2.0:
+    resolution: {integrity: sha512-vH+46JS0tgVEOZ3Xnx9WLCgOWdVNq08m0o1H+mDX7gEGNa7QyMW+Avu5AuAU9t5Xa6YfVd801lbuSVgHCCLuzw==}
 
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
@@ -1939,7 +1939,7 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  hsml@0.1.0: {}
+  hsml@0.2.0: {}
 
   html-escaper@2.0.2: {}
 
