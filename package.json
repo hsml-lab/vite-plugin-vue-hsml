@@ -51,7 +51,7 @@
     "rimraf": "~5.0.10",
     "tsup": "~6.7.0",
     "tsx": "~3.14.0",
-    "typescript": "~5.0.4",
+    "typescript": "~5.9.3",
     "vitest": "~0.31.1"
   },
   "peerDependencies": {
