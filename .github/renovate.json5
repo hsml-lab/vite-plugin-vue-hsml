@@ -33,6 +33,10 @@
       "rangeStrategy": "replace"
     },
     {
+      "groupName": "oxlint",
+      "matchPackageNames": ["oxlint", "oxlint-tsgolint"]
+    },
+    {
       "groupName": "oxfmt",
       "matchPackageNames": ["oxfmt"]
     },
