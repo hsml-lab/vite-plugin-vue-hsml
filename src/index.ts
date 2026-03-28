@@ -20,7 +20,7 @@ export function transform(code: string, id: string) {
 
   for (const diagnostic of result.diagnostics) {
     const loc = diagnostic.location
-      ? `:${diagnostic.location.line}:${diagnostic.location.column}`
+      ? `:${diagnostic.location.start.line}:${diagnostic.location.start.column}`
       : '';
     const prefix = diagnostic.severity === 'error' ? '[hsml error]' : '[hsml warning]';
     const code = diagnostic.code ? ` ${diagnostic.code}:` : '';
