@@ -36,10 +36,16 @@ export function transform(code: string, id: string, logger?: Logger) {
     const code = diagnostic.code ? ` ${diagnostic.code}:` : '';
     const msg = `${code} ${diagnostic.message} (${id}${loc})`;
 
-    if (diagnostic.severity === 'error') {
-      (logger ?? console).warn(`[hsml error]${msg}`);
-    } else {
-      (logger ?? console).warn(`[hsml warning]${msg}`);
+    const log = logger ?? console;
+    switch (diagnostic.severity) {
+      case 'error':
+        log.warn(`[hsml error]${msg}`);
+        break;
+      case 'warning':
+        log.warn(`[hsml warning]${msg}`);
+        break;
+      default:
+        diagnostic.severity satisfies never;
     }
   }
 
