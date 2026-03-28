@@ -342,12 +342,94 @@ const msg = 'Hello';
     });
   });
 
+  describe('diagnostics', () => {
+    it('should log warnings for duplicate classes', () => {
+      const warnings: string[] = [];
+      const logger = { warn: (msg: string) => warnings.push(msg) } as any;
+      const input = '<template lang="hsml">\nh1.foo.foo Hello\n</template>';
+      const result = transform(input, 'test.vue', logger);
+      expect(result?.code).toBe('<template><h1 class="foo foo">Hello</h1></template>');
+      expect(warnings.length).toBe(1);
+      expect(warnings[0]).toContain('[hsml warning]');
+      expect(warnings[0]).toContain('Duplicate class');
+    });
+  });
+
   describe('error handling', () => {
-    it('should throw on invalid HSML', () => {
+    it('should throw on invalid HSML with error details', () => {
       const input = '<template lang="hsml">\n42invalid\n</template>';
-      expect(() => transform(input, 'test.vue')).toThrow(
-        /Failed to compile HSML template in test\.vue:/,
-      );
+      expect(() => transform(input, 'test.vue')).toThrow(/Failed to compile HSML template:/);
+    });
+
+    it('should include file id and location on error', () => {
+      const input = '<template lang="hsml">\n42invalid\n</template>';
+      try {
+        transform(input, 'test.vue');
+        expect.unreachable('should have thrown');
+      } catch (err: any) {
+        expect(err.id).toBe('test.vue');
+        expect(err.plugin).toBe('vite-plugin-vue-hsml');
+        expect(err.loc).toEqual({
+          file: 'test.vue',
+          line: 2,
+          column: 1,
+        });
+      }
+    });
+
+    it('should compute correct line offset with script block', () => {
+      const input = `<script setup lang="ts">
+const msg = 'Hello';
+</script>
+
+<template lang="hsml">
+42invalid
+</template>`;
+      try {
+        transform(input, 'test.vue');
+        expect.unreachable('should have thrown');
+      } catch (err: any) {
+        expect(err.loc).toEqual({
+          file: 'test.vue',
+          line: 6,
+          column: 1,
+        });
+      }
+    });
+
+    it('should compute correct line offset with multiline template tag', () => {
+      const input = `<template
+  lang="hsml"
+>
+42invalid
+</template>`;
+      try {
+        transform(input, 'test.vue');
+        expect.unreachable('should have thrown');
+      } catch (err: any) {
+        expect(err.loc).toEqual({
+          file: 'test.vue',
+          line: 4,
+          column: 1,
+        });
+      }
+    });
+
+    it('should compute correct line offset with leading blank lines in content', () => {
+      const input = `<template lang="hsml">
+
+42invalid
+</template>`;
+      try {
+        transform(input, 'test.vue');
+        expect.unreachable('should have thrown');
+      } catch (err: any) {
+        expect(err.loc).toEqual({
+          file: 'test.vue',
+          line: 3,
+          column: 1,
+        });
+      }
     });
   });
 
