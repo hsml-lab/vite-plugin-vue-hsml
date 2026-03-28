@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       hsml:
-        specifier: ~0.2.0
-        version: 0.2.0
+        specifier: ~0.4.0
+        version: 0.4.0
     devDependencies:
       '@types/node':
         specifier: 24.12.0
@@ -1040,8 +1040,8 @@ packages:
   hookable@6.1.0:
     resolution: {integrity: sha512-ZoKZSJgu8voGK2geJS+6YtYjvIzu9AOM/KZXsBxr83uhLL++e9pEv/dlgwgy3dvHg06kTz6JOh1hk3C8Ceiymw==}
 
-  hsml@0.2.0:
-    resolution: {integrity: sha512-vH+46JS0tgVEOZ3Xnx9WLCgOWdVNq08m0o1H+mDX7gEGNa7QyMW+Avu5AuAU9t5Xa6YfVd801lbuSVgHCCLuzw==}
+  hsml@0.4.0:
+    resolution: {integrity: sha512-dBb0BOASxSRWGAzbC/3Bl6691WxSIRhJWWbGbCrWtHxi0gxtgAyKuzQykLS1QNlof8SV057S/QGdZRywdx+O4A==}
 
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
@@ -2281,7 +2281,7 @@ snapshots:
 
   hookable@6.1.0: {}
 
-  hsml@0.2.0: {}
+  hsml@0.4.0: {}
 
   html-escaper@2.0.2: {}
 
