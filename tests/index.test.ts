@@ -343,11 +343,47 @@ const msg = 'Hello';
   });
 
   describe('error handling', () => {
-    it('should throw on invalid HSML', () => {
+    it('should throw on invalid HSML with error details', () => {
       const input = '<template lang="hsml">\n42invalid\n</template>';
       expect(() => transform(input, 'test.vue')).toThrow(
-        /Failed to compile HSML template in test\.vue:/,
+        /Failed to compile HSML template:/,
       );
+    });
+
+    it('should include file id and location on error', () => {
+      const input = '<template lang="hsml">\n42invalid\n</template>';
+      try {
+        transform(input, 'test.vue');
+        expect.unreachable('should have thrown');
+      } catch (err: any) {
+        expect(err.id).toBe('test.vue');
+        expect(err.plugin).toBe('vite-plugin-vue-hsml');
+        expect(err.loc).toEqual({
+          file: 'test.vue',
+          line: 2,
+          column: 1,
+        });
+      }
+    });
+
+    it('should compute correct line offset with script block', () => {
+      const input = `<script setup lang="ts">
+const msg = 'Hello';
+</script>
+
+<template lang="hsml">
+42invalid
+</template>`;
+      try {
+        transform(input, 'test.vue');
+        expect.unreachable('should have thrown');
+      } catch (err: any) {
+        expect(err.loc).toEqual({
+          file: 'test.vue',
+          line: 6,
+          column: 1,
+        });
+      }
     });
   });
 
