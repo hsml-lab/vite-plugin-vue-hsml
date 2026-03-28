@@ -342,6 +342,21 @@ const msg = 'Hello';
     });
   });
 
+  describe('diagnostics', () => {
+    it('should log warnings for duplicate classes', () => {
+      const warnings: string[] = [];
+      const logger = { warn: (msg: string) => warnings.push(msg) } as any;
+      const input = '<template lang="hsml">\nh1.foo.foo Hello\n</template>';
+      const result = transform(input, 'test.vue', logger);
+      expect(result?.code).toBe(
+        '<template><h1 class="foo foo">Hello</h1></template>',
+      );
+      expect(warnings.length).toBe(1);
+      expect(warnings[0]).toContain('[hsml warning]');
+      expect(warnings[0]).toContain('Duplicate class');
+    });
+  });
+
   describe('error handling', () => {
     it('should throw on invalid HSML with error details', () => {
       const input = '<template lang="hsml">\n42invalid\n</template>';
