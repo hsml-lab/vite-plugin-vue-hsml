@@ -2,8 +2,7 @@ import { compileContentWithDiagnostics } from 'hsml';
 import type { Logger, Plugin } from 'vite';
 
 const fileRegex = /\.vue$/;
-const templateRegex =
-  /<template\b(?=[^>]*\blang\s*=\s*["']hsml["'])[^>]*>([\s\S]*?)<\/template>/m;
+const templateRegex = /<template\b(?=[^>]*\blang\s*=\s*["']hsml["'])[^>]*>([\s\S]*?)<\/template>/m;
 
 /** Compute the line offset of the template block within the full SFC. */
 function getTemplateLineOffset(code: string, matchIndex: number): number {

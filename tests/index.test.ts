@@ -348,9 +348,7 @@ const msg = 'Hello';
       const logger = { warn: (msg: string) => warnings.push(msg) } as any;
       const input = '<template lang="hsml">\nh1.foo.foo Hello\n</template>';
       const result = transform(input, 'test.vue', logger);
-      expect(result?.code).toBe(
-        '<template><h1 class="foo foo">Hello</h1></template>',
-      );
+      expect(result?.code).toBe('<template><h1 class="foo foo">Hello</h1></template>');
       expect(warnings.length).toBe(1);
       expect(warnings[0]).toContain('[hsml warning]');
       expect(warnings[0]).toContain('Duplicate class');
@@ -360,9 +358,7 @@ const msg = 'Hello';
   describe('error handling', () => {
     it('should throw on invalid HSML with error details', () => {
       const input = '<template lang="hsml">\n42invalid\n</template>';
-      expect(() => transform(input, 'test.vue')).toThrow(
-        /Failed to compile HSML template:/,
-      );
+      expect(() => transform(input, 'test.vue')).toThrow(/Failed to compile HSML template:/);
     });
 
     it('should include file id and location on error', () => {
