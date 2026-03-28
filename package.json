@@ -59,7 +59,7 @@
   "devDependencies": {
     "@types/node": "24.12.0",
     "@vitejs/plugin-vue": "6.0.5",
-    "@vitest/coverage-v8": "4.1.0",
+    "@vitest/coverage-v8": "4.1.1",
     "c8": "11.0.0",
     "npm-run-all2": "8.0.4",
     "oxfmt": "0.41.0",
@@ -71,7 +71,7 @@
     "tsx": "4.21.0",
     "typescript": "5.9.3",
     "vite": "8.0.1",
-    "vitest": "4.1.0",
+    "vitest": "4.1.1",
     "vue": "3.5.30"
   },
   "peerDependencies": {
