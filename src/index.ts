@@ -2,15 +2,16 @@ import { compileContentWithDiagnostics } from 'hsml';
 import type { Logger, Plugin } from 'vite';
 
 const fileRegex = /\.vue$/;
-const templateRegex = /<template\b(?=[^>]*\blang\s*=\s*["']hsml["'])[^>]*>([\s\S]*?)<\/template>/m;
+const templateRegex =
+  /(<template\b(?=[^>]*\blang\s*=\s*["']hsml["'])[^>]*>)([\s\S]*?)<\/template>/m;
 
-/** Compute the line offset of the template block within the full SFC. */
-function getTemplateLineOffset(code: string, matchIndex: number): number {
-  let lines = 0;
-  for (let i = 0; i < matchIndex; i++) {
-    if (code[i] === '\n') lines++;
+/** Count newlines in a string. */
+function countNewlines(str: string): number {
+  let count = 0;
+  for (const ch of str) {
+    if (ch === '\n') count++;
   }
-  return lines;
+  return count;
 }
 
 /** @internal */
@@ -24,8 +25,14 @@ export function transform(code: string, id: string, logger?: Logger) {
     return;
   }
 
-  const templateLineOffset = getTemplateLineOffset(code, match.index) + 1;
-  const hsml = match[1]!.replaceAll('\r\n', '\n').trimStart();
+  const openingTag = match[1]!;
+  const rawContent = match[2]!.replaceAll('\r\n', '\n');
+  const trimmedPrefix = rawContent.match(/^\s*/)?.[0] ?? '';
+  const contentStartOffset =
+    countNewlines(code.slice(0, match.index)) +
+    countNewlines(openingTag) +
+    countNewlines(trimmedPrefix);
+  const hsml = rawContent.trimStart();
   const result = compileContentWithDiagnostics(hsml);
 
   for (const diagnostic of result.diagnostics) {
@@ -61,7 +68,7 @@ export function transform(code: string, id: string, logger?: Logger) {
     if (firstError?.location) {
       err.loc = {
         file: id,
-        line: firstError.location.start.line + templateLineOffset,
+        line: firstError.location.start.line + contentStartOffset,
         column: firstError.location.start.column,
       };
     }

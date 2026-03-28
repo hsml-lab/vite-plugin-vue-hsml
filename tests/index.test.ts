@@ -396,6 +396,41 @@ const msg = 'Hello';
         });
       }
     });
+
+    it('should compute correct line offset with multiline template tag', () => {
+      const input = `<template
+  lang="hsml"
+>
+42invalid
+</template>`;
+      try {
+        transform(input, 'test.vue');
+        expect.unreachable('should have thrown');
+      } catch (err: any) {
+        expect(err.loc).toEqual({
+          file: 'test.vue',
+          line: 4,
+          column: 1,
+        });
+      }
+    });
+
+    it('should compute correct line offset with leading blank lines in content', () => {
+      const input = `<template lang="hsml">
+
+42invalid
+</template>`;
+      try {
+        transform(input, 'test.vue');
+        expect.unreachable('should have thrown');
+      } catch (err: any) {
+        expect(err.loc).toEqual({
+          file: 'test.vue',
+          line: 3,
+          column: 1,
+        });
+      }
+    });
   });
 
   describe('real-world example', () => {
