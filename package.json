@@ -62,7 +62,7 @@
     "@vitest/coverage-v8": "4.1.0",
     "c8": "11.0.0",
     "npm-run-all2": "8.0.4",
-    "oxfmt": "0.41.0",
+    "oxfmt": "0.42.0",
     "oxlint": "1.56.0",
     "oxlint-tsgolint": "0.17.1",
     "publint": "0.3.18",
