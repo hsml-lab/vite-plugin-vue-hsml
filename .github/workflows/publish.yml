@@ -1,9 +1,10 @@
 name: Publish
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_run:
+    workflows: ['Release']
+    types:
+      - completed
 
 permissions:
   contents: read
@@ -12,6 +13,7 @@ jobs:
   publish-npm:
     name: Publish to npm
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: read
       id-token: write
@@ -19,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
@@ -35,6 +39,17 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      - name: Verify tag matches package version
+        env:
+          TAG: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          TAG="${TAG#v}"
+          PKG_VERSION="$(node -e "import('./package.json',{with:{type:'json'}}).then(m=>process.stdout.write(m.default.version))")"
+          [ "$TAG" = "$PKG_VERSION" ] || {
+            echo "Tag version ($TAG) does not match package.json version ($PKG_VERSION)"
+            exit 1
+          }
 
       - name: Publish to npm with provenance
         run: pnpm publish --provenance --access public --no-git-checks
