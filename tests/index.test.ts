@@ -72,15 +72,15 @@ describe('vite-plugin-vue-hsml', () => {
 
     it('should compile implicit div with id', () => {
       const result = transform('<template lang="hsml">\n#app\n</template>', 'test.vue');
-      expect(result?.code).toBe('<template><div id="app"/></template>');
+      expect(result?.code).toBe('<template><div id="app"></div></template>');
     });
 
-    it('should compile self-closing tags', () => {
+    it('should compile void element self-closing tags', () => {
       const result = transform(
         '<template lang="hsml">\nimg(src="/photo.jpg")\n</template>',
         'test.vue',
       );
-      expect(result?.code).toBe('<template><img src="/photo.jpg"/></template>');
+      expect(result?.code).toBe('<template><img src="/photo.jpg" /></template>');
     });
 
     it('should compile nested tags', () => {
@@ -136,20 +136,20 @@ p Content
         'test.vue',
       );
       expect(result?.code).toBe(
-        '<template><div class="hover:text-red focus:outline-none"/></template>',
+        '<template><div class="hover:text-red focus:outline-none"></div></template>',
       );
     });
 
     it('should compile Tailwind arbitrary value classes', () => {
       const result = transform('<template lang="hsml">\ndiv.bg-[#1da1f2]\n</template>', 'test.vue');
-      expect(result?.code).toBe('<template><div class="bg-[#1da1f2]"/></template>');
+      expect(result?.code).toBe('<template><div class="bg-[#1da1f2]"></div></template>');
     });
   });
 
   describe('ids', () => {
     it('should compile an id', () => {
       const result = transform('<template lang="hsml">\ndiv#app\n</template>', 'test.vue');
-      expect(result?.code).toBe('<template><div id="app"/></template>');
+      expect(result?.code).toBe('<template><div id="app"></div></template>');
     });
 
     it('should compile id with classes', () => {
@@ -167,7 +167,7 @@ p Content
         '<template lang="hsml">\nimg(src="/photo.jpg" alt="A photo")\n</template>',
         'test.vue',
       );
-      expect(result?.code).toBe('<template><img src="/photo.jpg" alt="A photo"/></template>');
+      expect(result?.code).toBe('<template><img src="/photo.jpg" alt="A photo" /></template>');
     });
 
     it('should compile boolean attributes', () => {
@@ -188,7 +188,7 @@ img(
 </template>`;
       const result = transform(input, 'test.vue');
       expect(result?.code).toBe(
-        '<template><img src="/photo.jpg" alt="A photo" width="300"/></template>',
+        '<template><img src="/photo.jpg" alt="A photo" width="300" /></template>',
       );
     });
   });
@@ -245,7 +245,7 @@ img(
         '<template lang="hsml">\nslot(name="header")\n</template>',
         'test.vue',
       );
-      expect(result?.code).toBe('<template><slot name="header"/></template>');
+      expect(result?.code).toBe('<template><slot name="header"></slot></template>');
     });
 
     it('should compile v-model', () => {
@@ -253,7 +253,7 @@ img(
         '<template lang="hsml">\ninput(v-model="name")\n</template>',
         'test.vue',
       );
-      expect(result?.code).toBe('<template><input v-model="name"/></template>');
+      expect(result?.code).toBe('<template><input v-model="name" /></template>');
     });
   });
 
@@ -459,7 +459,7 @@ div.container
           '<a class="text-blue-500 hover:underline" :href="link.href">{{ link.label }}</a>' +
           '</li></ul></nav>' +
           '</header>' +
-          '<main class="p-4"><slot/></main>' +
+          '<main class="p-4"><slot></slot></main>' +
           '<footer class="p-4 text-gray-500 text-sm"><p>&copy; 2025</p></footer>' +
           '</div>' +
           '</template>',
