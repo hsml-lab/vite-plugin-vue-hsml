@@ -9,6 +9,7 @@
     "sfc",
     "template",
     "vite",
+    "vite-plugin",
     "vue"
   ],
   "bugs": "https://github.com/hsml-lab/vite-plugin-vue-hsml/issues",
@@ -20,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hsml-lab/vite-plugin-vue-hsml.git"
+    "url": "git+https://github.com/hsml-lab/vite-plugin-vue-hsml.git"
   },
   "funding": [
     {
