@@ -55,7 +55,7 @@
     "preflight": "pnpm install && run-s format lint ts-check build test:update-snapshots"
   },
   "dependencies": {
-    "hsml": "~0.5.0"
+    "hsml": "~0.6.0"
   },
   "devDependencies": {
     "@types/node": "24.12.0",
