@@ -144,6 +144,24 @@ p Content
       const result = transform('<template lang="hsml">\ndiv.bg-[#1da1f2]\n</template>', 'test.vue');
       expect(result?.code).toBe('<template><div class="bg-[#1da1f2]"></div></template>');
     });
+
+    it('should merge shorthand classes into an explicit class attribute', () => {
+      const result = transform(
+        '<template lang="hsml">\ndiv.foo(class="bar") Hi\n</template>',
+        'test.vue',
+      );
+      expect(result?.code).toBe('<template><div class="foo bar">Hi</div></template>');
+    });
+
+    it('should keep shorthand class and dynamic :class separate', () => {
+      const result = transform(
+        '<template lang="hsml">\ndiv.foo(:class="{ active: a }") Hi\n</template>',
+        'test.vue',
+      );
+      expect(result?.code).toBe(
+        '<template><div class="foo" :class="{ active: a }">Hi</div></template>',
+      );
+    });
   });
 
   describe('ids', () => {
